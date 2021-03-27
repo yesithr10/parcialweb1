@@ -67,9 +67,9 @@ export class RegistroEstudianteComponent implements OnInit {
 
         estudiante.totalAPagar = estudiante.valorMatricula * (1 - estudiante.valorDescuento);
 
-        const valorDescontado = (estudiante.valorDescuento * estudiante.valorMatricula);
-        if ((this.presupuesto - valorDescontado) > 0) {
-          this.presupuesto -= valorDescontado;
+        estudiante.valorDescontado = (estudiante.valorDescuento * estudiante.valorMatricula);
+        if ((this.presupuesto - estudiante.valorDescontado) > 0) {
+          this.presupuesto -= estudiante.valorDescontado;
           localStorage.setItem('presupuesto', JSON.stringify(this.presupuesto));
 
           listaEstudiantes.push(estudiante);

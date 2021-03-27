@@ -4,6 +4,7 @@ import { ConsultaMatriculaComponent } from './components/consulta-matricula/cons
 import { RegistroEstudianteComponent } from './components/registro-estudiante/registro-estudiante.component';
 
 const routes: Routes = [
+  {path: '', redirectTo: '/registro', pathMatch: 'full'},
   {path: 'registro', component: RegistroEstudianteComponent},
   {path: 'consulta', component: ConsultaMatriculaComponent}
 ];

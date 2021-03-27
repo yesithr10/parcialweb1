@@ -4,5 +4,6 @@ export interface Estudiante {
     grupoSisben: string;
     valorMatricula: number;
     valorDescuento?: number;
+    valorDescontado?: number;
     totalAPagar?: number;
 }

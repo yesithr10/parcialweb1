@@ -3,4 +3,6 @@ export interface Estudiante {
     nombre: string;
     grupoSisben: string;
     valorMatricula: number;
+    valorDescuento?: number;
+    totalAPagar?: number;
 }

@@ -1,28 +1,40 @@
 <div class="container mt-5">
-    <form [formGroup]="matriculaForm">
-        <div class="mb-3">
+    <form class="was-validated" [formGroup]="matriculaForm" (ngSubmit)="registrarEstudiante()">
+        <div class="mb-3 has-validation">
             <label for="id" class="form-label">Id</label>
-            <input type="text" class="form-control" id="id" rows="3" formControlName="id"/>
+            <input type="text" class="form-control" id="id" rows="3" formControlName="id" required/>
+            <div class="invalid-feedback" *ngIf="matriculaForm.controls['id'].hasError('required')">
+                Digite su id
+            </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 has-validation">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" rows="3" formControlName="nombre"/>
+            <input type="text" class="form-control" id="nombre" rows="3" formControlName="nombre" required/>
+            <div class="invalid-feedback" *ngIf="matriculaForm.controls['nombre'].hasError('required')">
+                Digite su nombre
+            </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 has-validation">
             <label for="grupoSisben" class="form-label">Grupo sisben</label>
-            <select id="grupoSisben" class="form-control form-select" formControlName="grupoSisben">
+            <select id="grupoSisben" class="form-control form-select" formControlName="grupoSisben" required>
                 <option value="A">Grupo A</option>
                 <option value="B">Grupo B</option>
                 <option value="C">Grupo C</option>
                 <option value="D">Grupo D</option>
               </select>
+              <div class="invalid-feedback" *ngIf="matriculaForm.controls['grupoSisben'].hasError('required')">
+                Seleccione su grupo del sisben
+            </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 has-validation">
             <label for="valorMatricula" class="form-label">Valor matricula</label>
-            <input type="number" class="form-control" id="valorMatricula" rows="3" formControlName="valorMatricula"/>
+            <input type="number" class="form-control" id="valorMatricula" rows="3" formControlName="valorMatricula" required/>
+            <div class="invalid-feedback" *ngIf="matriculaForm.controls['valorMatricula'].hasError('required')">
+                Digite su valor de matricula
+            </div>
         </div>
         <div class="mb-3">
-            <button type="button" class="btn btn-success" (click)="registrarEstudiante()">Registrar estudiante</button>
+            <button type="submit" class="btn btn-success">Registrar estudiante</button>
         </div>
     </form>
 </div>

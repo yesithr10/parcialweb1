@@ -16,7 +16,7 @@ export class RegistroEstudianteComponent implements OnInit {
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       grupoSisben: ['', Validators.required],
-      valorMatricula: [0, Validators.required],
+      valorMatricula: ['', Validators.required],
     });
   }
 
@@ -30,6 +30,7 @@ export class RegistroEstudianteComponent implements OnInit {
   }
 
   registrarEstudiante(): void {
+    console.log('CLICK')
     if (this.matriculaForm.valid) {
       const estudiante: Estudiante = {
         id: this.matriculaForm.controls['id'].value,

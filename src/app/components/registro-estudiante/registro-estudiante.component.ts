@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Estudiante } from 'src/app/models/estudiante';
+import { MatriculaService } from 'src/app/services/matricula.service';
 
 @Component({
   selector: 'app-registro-estudiante',
@@ -11,7 +12,7 @@ export class RegistroEstudianteComponent implements OnInit {
   matriculaForm: FormGroup;
   presupuesto: number = 100000000;
 
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder, private matriculaService: MatriculaService) { 
     this.matriculaForm = this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
@@ -21,16 +22,10 @@ export class RegistroEstudianteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const presupuestoStr = localStorage.getItem('presupuesto');
-    if (!presupuestoStr) {
-      localStorage.setItem('presupuesto', JSON.stringify(this.presupuesto));
-    } else {
-      this.presupuesto = +JSON.parse(presupuestoStr);
-    }
+    this.presupuesto = this.matriculaService.obtenerPresupuesto();
   }
 
   registrarEstudiante(): void {
-    console.log('CLICK')
     if (this.matriculaForm.valid) {
       const estudiante: Estudiante = {
         id: this.matriculaForm.controls['id'].value,
@@ -39,50 +34,14 @@ export class RegistroEstudianteComponent implements OnInit {
         valorMatricula: +this.matriculaForm.controls['valorMatricula'].value,
       };
 
-      const estudiantesStr = localStorage.getItem('estudiantes');
-      let listaEstudiantes: Array<Estudiante>;
-      if (!estudiantesStr)
-      {
-        listaEstudiantes = []
+      const resultado = this.matriculaService.guardarEstudiante(estudiante);
+      if (resultado) {
+        alert(resultado);
       } else {
-        listaEstudiantes = JSON.parse(estudiantesStr as string) as Array<Estudiante>;
-      }
-
-      let estudianteRegistrado = false;
-      for (let i = 0; i < listaEstudiantes.length; i++) {
-        if (listaEstudiantes[i].id === estudiante.id){
-          alert("Este estudiante ya se encuentra registrado");
-          estudianteRegistrado = true;
-          break; // Para romper el bucle una vez encontrado un estudiante repetido
-        }
-      }
-
-      if (!estudianteRegistrado) {
-        if (estudiante.grupoSisben === 'A' || estudiante.grupoSisben === 'B') {
-          estudiante.valorDescuento = 1;
-        } else if (estudiante.grupoSisben == 'C') {
-          estudiante.valorDescuento = 0.6;
-        } else {
-          estudiante.valorDescuento = 0;
-        }
-
-        estudiante.totalAPagar = estudiante.valorMatricula * (1 - estudiante.valorDescuento);
-
-        estudiante.valorDescontado = (estudiante.valorDescuento * estudiante.valorMatricula);
-        if ((this.presupuesto - estudiante.valorDescontado) > 0) {
-          this.presupuesto -= estudiante.valorDescontado;
-          localStorage.setItem('presupuesto', JSON.stringify(this.presupuesto));
-
-          listaEstudiantes.push(estudiante);
-          localStorage.setItem('estudiantes', JSON.stringify(listaEstudiantes));
-
-          this.matriculaForm.controls['id'].setValue('');
-          this.matriculaForm.controls['nombre'].setValue('');
-          this.matriculaForm.controls['grupoSisben'].setValue('');
-          this.matriculaForm.controls['valorMatricula'].setValue('');
-        } else {
-          alert('No hay presupuesto suficiente');
-        }
+        this.matriculaForm.controls['id'].setValue('');
+        this.matriculaForm.controls['nombre'].setValue('');
+        this.matriculaForm.controls['grupoSisben'].setValue('');
+        this.matriculaForm.controls['valorMatricula'].setValue('');
       }
     }
   }

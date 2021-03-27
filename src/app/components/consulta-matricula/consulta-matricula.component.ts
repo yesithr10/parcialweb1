@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Estudiante } from 'src/app/models/estudiante';
+import { MatriculaService } from 'src/app/services/matricula.service';
 
 @Component({
   selector: 'app-consulta-matricula',
@@ -10,25 +11,14 @@ export class ConsultaMatriculaComponent implements OnInit {
   estudiantes: Array<Estudiante> = [];
   recursosUtilizados: number = 0;
   recursosRestastes: number = 0;
-  constructor() { }
+
+  constructor(private matriculaService: MatriculaService) { }
 
   ngOnInit(): void {
-    const estudiantesStr = localStorage.getItem('estudiantes');
-      let listaEstudiantes: Array<Estudiante>;
-      if (!estudiantesStr)
-      {
-        listaEstudiantes = []
-      } else {
-        listaEstudiantes = JSON.parse(estudiantesStr as string) as Array<Estudiante>;
-      }
-    this.estudiantes = listaEstudiantes;
-
+    this.estudiantes = this.matriculaService.obtenerEstudiantes();
+    this.recursosRestastes = this.matriculaService.obtenerPresupuesto();
     for (let index = 0; index < this.estudiantes.length; index++) {
       this.recursosUtilizados += this.estudiantes[index].valorDescontado ?? 0;
     }
-
-    const recursosStr = localStorage.getItem('presupuesto');
-    this.recursosRestastes = +JSON.parse(recursosStr ?? '0');
   }
-
 }

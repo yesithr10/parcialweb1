@@ -75,6 +75,11 @@ export class RegistroEstudianteComponent implements OnInit {
 
           listaEstudiantes.push(estudiante);
           localStorage.setItem('estudiantes', JSON.stringify(listaEstudiantes));
+
+          this.matriculaForm.controls['id'].setValue('');
+          this.matriculaForm.controls['nombre'].setValue('');
+          this.matriculaForm.controls['grupoSisben'].setValue('');
+          this.matriculaForm.controls['valorMatricula'].setValue('');
         } else {
           alert('No hay presupuesto suficiente');
         }

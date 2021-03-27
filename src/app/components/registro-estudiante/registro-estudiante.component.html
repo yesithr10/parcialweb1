@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <form [formGroup]="matriculaForm">
+        <div class="mb-3">
+            <label for="id" class="form-label">Id</label>
+            <input type="text" class="form-control" id="id" rows="3" formControlName="id"/>
+        </div>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" rows="3" formControlName="nombre"/>
+        </div>
+        <div class="mb-3">
+            <label for="grupoSisben" class="form-label">Grupo sisben</label>
+            <select id="grupoSisben" class="form-control form-select" formControlName="grupoSisben">
+                <option value="A">Grupo A</option>
+                <option value="B">Grupo B</option>
+                <option value="C">Grupo C</option>
+                <option value="D">Grupo D</option>
+              </select>
+        </div>
+        <div class="mb-3">
+            <label for="valorMatricula" class="form-label">Valor matricula</label>
+            <input type="number" class="form-control" id="valorMatricula" rows="3" formControlName="valorMatricula"/>
+        </div>
+        <div class="mb-3">
+            <button type="button" class="btn btn-success">Registrar estudiante</button>
+        </div>
+    </form>
+</div>
